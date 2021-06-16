@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Product\ProductCreateController;
+use App\Http\Controllers\Product\ProductDeleteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,3 +16,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/product', ProductCreateController::class);
+
+Route::delete('/product/{product}', ProductDeleteController::class);
