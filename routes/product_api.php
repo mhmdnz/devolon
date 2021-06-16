@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Product\ProductCreateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,3 +13,5 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('/product', ProductCreateController::class);
