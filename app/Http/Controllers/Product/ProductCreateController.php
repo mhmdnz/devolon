@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductRequest;
+use App\Http\Requests\CreateProductRequest;
 use App\Services\Interfaces\ProductServiceInterface;
 
 class ProductCreateController extends Controller
@@ -14,7 +14,7 @@ class ProductCreateController extends Controller
      */
     public function __construct(
         private ProductServiceInterface $productService,
-        private ProductRequest $productRequest
+        private CreateProductRequest $productRequest
     )
     {
     }
@@ -24,6 +24,6 @@ class ProductCreateController extends Controller
      */
     public function __invoke()
     {
-        return response()->json($this->productService->save($this->productRequest));
+        return response()->json($this->productService->save($this->productRequest->toArray()));
     }
 }

@@ -4,7 +4,8 @@
 namespace App\Services;
 
 
-use App\Http\Requests\ProductRequest;
+use App\Http\Requests\CreateProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Services\Interfaces\ProductServiceInterface;
@@ -15,9 +16,9 @@ class ProductService implements ProductServiceInterface
     {
     }
 
-    public function save(ProductRequest $productRequest): Product
+    public function save(array $productRequest): Product
     {
-        return $this->productRepository->save($productRequest->toArray());
+        return $this->productRepository->save($productRequest);
     }
 
     public function update(Product $product, array $productItems): bool

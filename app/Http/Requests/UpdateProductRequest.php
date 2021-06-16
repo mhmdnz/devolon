@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductRequest extends FormRequest
+class UpdateProductRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,8 +14,8 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3|max:30',
-            'unit_price' => 'required|numeric'
+            'name' => 'min:3|max:30',
+            'unit_price' => 'numeric'
         ];
     }
 }

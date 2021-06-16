@@ -4,7 +4,7 @@
 namespace App\Repositories\EloquentRepositories;
 
 
-use App\Http\Requests\ProductRequest;
+use App\Http\Requests\CreateProductRequest;
 use App\Models\Product;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
 
