@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateProductRequest;
-use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\ProductCreateRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
 use App\Services\Interfaces\ProductServiceInterface;
 use Illuminate\Http\Request;
@@ -17,7 +17,7 @@ class ProductUpdateController extends Controller
      */
     public function __construct(
         private ProductServiceInterface $productService,
-        private UpdateProductRequest $productRequest
+        private ProductUpdateRequest $productRequest
     )
     {
     }
