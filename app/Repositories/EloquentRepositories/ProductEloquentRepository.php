@@ -4,7 +4,7 @@
 namespace App\Repositories\EloquentRepositories;
 
 
-use App\Http\Requests\CreateProductRequest;
+use App\Http\Requests\ProductCreateRequest;
 use App\Models\Product;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
 
@@ -24,5 +24,10 @@ class ProductEloquentRepository implements ProductRepositoryInterface
     public function delete(Product $product): bool
     {
         return $product->delete();
+    }
+
+    public function insert(array $products): bool
+    {
+        return Product::insert($products);
     }
 }
