@@ -11,8 +11,9 @@ use Illuminate\Http\Request;
 class ProductUpsertController extends Controller
 {
     /**
-     * ProductCreateController constructor.
+     * ProductUpsertController constructor.
      * @param ProductServiceInterface $productService
+     * @param ProductInsertRequest $productRequest
      */
     public function __construct(
         private ProductServiceInterface $productService,
