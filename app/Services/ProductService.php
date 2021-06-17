@@ -3,36 +3,19 @@
 
 namespace App\Services;
 
-
-use App\Http\Requests\ProductCreateRequest;
-use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
+use App\Repositories\Interfaces\MainRepositoryInterface;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Services\Interfaces\ProductServiceInterface;
 
-class ProductService implements ProductServiceInterface
+class ProductService extends MainService implements ProductServiceInterface
 {
     public function __construct(protected ProductRepositoryInterface $productRepository)
     {
     }
 
-    public function save(array $productRequest): Product
+    public function setRepository(): MainRepositoryInterface
     {
-        return $this->productRepository->save($productRequest);
-    }
-
-    public function update(Product $product, array $productItems): bool
-    {
-        return $this->productRepository->update($product, $productItems);
-    }
-
-    public function delete(Product $product): bool
-    {
-        return $this->productRepository->delete($product);
-    }
-
-    public function upsert(array $products): bool
-    {
-        return $this->productRepository->upsert($products);
+        return $this->productRepository;
     }
 }

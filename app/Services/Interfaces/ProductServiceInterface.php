@@ -10,11 +10,5 @@ use App\Models\Product;
 
 interface ProductServiceInterface
 {
-    public function save(array $productRequest): Product;
 
-    public function upsert(array $products): bool;
-
-    public function update(Product $product, array $productItems): bool;
-
-    public function delete(Product $product): bool;
 }
