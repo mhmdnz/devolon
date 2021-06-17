@@ -9,14 +9,17 @@ use App\Models\Product;
 use App\Repositories\Interfaces\MainRepositoryInterface;
 use App\Repositories\Interfaces\OfferRepositoryInterface;
 use App\Services\Interfaces\OfferServiceInterface;
+use Illuminate\Database\Eloquent\Model;
 
-class OfferService extends MainService implements OfferServiceInterface
+class OfferService implements OfferServiceInterface
 {
+    use MainServiceTrait;
+
     public function __construct(protected OfferRepositoryInterface $offerRepository)
     {
     }
 
-    public function setRepository(): MainRepositoryInterface
+    public function getModelRepository(): MainRepositoryInterface
     {
         return $this->offerRepository;
     }

@@ -15,4 +15,6 @@ interface MainRepositoryInterface
     public function delete(Model $model): bool;
 
     public function upsert(array $models): bool;
+
+    public function getModel(): Model;
 }

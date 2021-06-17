@@ -8,15 +8,17 @@ use App\Models\Product;
 use App\Repositories\Interfaces\OfferRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 
-class OfferEloquentRepository extends MainEloquentRepository implements OfferRepositoryInterface
+class OfferEloquentRepository implements OfferRepositoryInterface
 {
+    use MainEloquentTrait;
+
     public function __construct(protected Offer $offer)
     {
     }
 
-    public function setModel(): Model
+    public function getModel(): Model
     {
-         return $this->offer;
+        return $this->offer;
     }
 
     public function saveOnProduct(Product $product, array $offerItems): Offer

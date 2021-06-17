@@ -9,7 +9,7 @@ use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
 use Illuminate\Support\Collection;
 
-interface ProductServiceInterface
+interface ProductServiceInterface extends MainServiceInterface
 {
     public function getOffers(Product $product): Collection;
 }

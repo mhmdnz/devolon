@@ -1,17 +1,14 @@
 <?php
 
-
 namespace App\Repositories\EloquentRepositories;
 
-
-use App\Repositories\Interfaces\MainRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 
-abstract class MainEloquentRepository implements MainRepositoryInterface
+trait MainEloquentTrait
 {
     public function save(array $productItems): Model
     {
-        return $this->setModel()::create($productItems);
+        return $this->getModel()::create($productItems);
     }
 
     public function update(Model $model, array $modelItems): bool
@@ -26,8 +23,6 @@ abstract class MainEloquentRepository implements MainRepositoryInterface
 
     public function upsert(array $models): bool
     {
-        return $this->setModel()::upsert($models, 'name');
+        return $this->getModel()::upsert($models, 'name');
     }
-
-    public abstract function setModel(): Model;
 }

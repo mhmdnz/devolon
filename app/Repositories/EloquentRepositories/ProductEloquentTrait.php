@@ -1,22 +1,21 @@
 <?php
 
-
 namespace App\Repositories\EloquentRepositories;
 
-
-use App\Http\Requests\ProductCreateRequest;
 use App\Models\Product;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-class ProductEloquentRepository extends MainEloquentRepository implements ProductRepositoryInterface
+class ProductEloquentTrait implements ProductRepositoryInterface
 {
+    use MainEloquentTrait;
+
     public function __construct(protected Product $product)
     {
     }
 
-    public function setModel(): Model
+    public function getModel(): Model
     {
         return $this->product;
     }

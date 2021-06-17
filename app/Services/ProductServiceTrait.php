@@ -9,13 +9,15 @@ use App\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Services\Interfaces\ProductServiceInterface;
 use Illuminate\Support\Collection;
 
-class ProductService extends MainService implements ProductServiceInterface
+class ProductServiceTrait implements ProductServiceInterface
 {
+    use MainServiceTrait;
+
     public function __construct(protected ProductRepositoryInterface $productRepository)
     {
     }
 
-    public function setRepository(): MainRepositoryInterface
+    public function getModelRepository(): MainRepositoryInterface
     {
         return $this->productRepository;
     }

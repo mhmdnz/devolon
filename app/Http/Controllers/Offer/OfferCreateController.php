@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Offer;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\OfferCreateRequest;
 use App\Models\Product;
 use App\Services\Interfaces\OfferServiceInterface;
-use Illuminate\Http\Request;
 
-class OfferCreateController extends Controller
+class OfferCreateController
 {
     /**
      * OfferCreateController constructor.
