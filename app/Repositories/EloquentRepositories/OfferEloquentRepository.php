@@ -28,4 +28,9 @@ class OfferEloquentRepository implements OfferRepositoryInterface
 
         return $offer;
     }
+
+    public function getProduct(Offer $offer): Product
+    {
+        return $offer->product;
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Offer\OfferCreateController;
+use App\Http\Controllers\Offer\OfferDeleteController;
 use App\Http\Controllers\Offer\OfferShowController;
 use Illuminate\Support\Facades\Route;
 /*
@@ -17,3 +18,5 @@ use Illuminate\Support\Facades\Route;
 Route::post('/product/{product}/offer', OfferCreateController::class);
 
 Route::get('/product/{product}/offers', OfferShowController::class);
+
+Route::delete('/product/{product}/offer/{offer}', OfferDeleteController::class);

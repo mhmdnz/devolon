@@ -25,4 +25,14 @@ class OfferService implements OfferServiceInterface
     {
         return $this->offerRepository->saveOnProduct($product, $offerItems);
     }
+
+    public function deleteFromProduct(Product $product, Offer $offer): bool
+    {
+        if ($this->offerRepository->getProduct($offer) == $product) {
+
+            return $this->offerRepository->delete($offer);
+        }
+
+        return false;
+    }
 }
