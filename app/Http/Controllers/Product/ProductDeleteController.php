@@ -17,12 +17,13 @@ class ProductDeleteController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Product $product
+     * @return \Illuminate\Http\Response
      */
     public function __invoke(Product $product)
     {
-        return response()->json([
-            'result' => $this->productService->delete($product)
-        ]);
+        $this->productService->delete($product);
+
+        return response()->noContent();
     }
 }

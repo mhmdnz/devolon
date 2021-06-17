@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductCreateRequest;
 use App\Http\Requests\ProductUpdateRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Services\Interfaces\ProductServiceInterface;
 use Illuminate\Http\Request;
@@ -21,13 +22,15 @@ class ProductUpdateController extends Controller
     )
     {
     }
+
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Product $product
+     * @return ProductResource
      */
     public function __invoke(Product $product)
     {
-        return response()->json([
-            'result' => $this->productService->update($product, $this->productRequest->toArray())
-        ]);
+        $this->productService->update($product, $this->productRequest->toArray());
+
+        return ProductResource::make($product);
     }
 }

@@ -1,11 +1,7 @@
 <?php
 
-
 namespace App\Services;
 
-
-use App\Repositories\Interfaces\MainRepositoryInterface;
-use App\Services\Interfaces\MainServiceInterface;
 use Illuminate\Database\Eloquent\Model;
 
 trait ServiceTrait

@@ -3,16 +3,19 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductShowController extends Controller
 {
+
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Product $product
+     * @return ProductResource
      */
     public function __invoke(Product $product)
     {
-        return response()->json($product);
+        return ProductResource::make($product);
     }
 }

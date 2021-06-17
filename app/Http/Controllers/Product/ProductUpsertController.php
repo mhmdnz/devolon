@@ -23,12 +23,12 @@ class ProductUpsertController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response
      */
     public function __invoke()
     {
-        return response()->json([
-            'result' => $this->productService->upsert($this->productRequest->toArray())
-        ]);
+        $this->productService->upsert($this->productRequest->toArray());
+
+        return response()->noContent();
     }
 }
