@@ -8,7 +8,7 @@ use App\Repositories\Interfaces\MainRepositoryInterface;
 use App\Services\Interfaces\MainServiceInterface;
 use Illuminate\Database\Eloquent\Model;
 
-trait MainServiceTrait
+trait ServiceTrait
 {
     public function save(array $modelItems): Model
     {

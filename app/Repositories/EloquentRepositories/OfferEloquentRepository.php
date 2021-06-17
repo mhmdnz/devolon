@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OfferEloquentRepository implements OfferRepositoryInterface
 {
-    use MainEloquentTrait;
+    use EloquentRepositoryTrait;
 
     public function __construct(protected Offer $offer)
     {

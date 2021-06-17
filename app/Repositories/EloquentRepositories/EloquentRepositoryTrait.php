@@ -4,7 +4,7 @@ namespace App\Repositories\EloquentRepositories;
 
 use Illuminate\Database\Eloquent\Model;
 
-trait MainEloquentTrait
+trait EloquentRepositoryTrait
 {
     public function save(array $productItems): Model
     {

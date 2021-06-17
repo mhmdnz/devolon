@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Services;
 
 use App\Models\Product;
@@ -9,9 +8,9 @@ use App\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Services\Interfaces\ProductServiceInterface;
 use Illuminate\Support\Collection;
 
-class ProductServiceTrait implements ProductServiceInterface
+class ProductService implements ProductServiceInterface
 {
-    use MainServiceTrait;
+    use ServiceTrait;
 
     public function __construct(protected ProductRepositoryInterface $productRepository)
     {

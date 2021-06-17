@@ -7,9 +7,9 @@ use App\Repositories\Interfaces\ProductRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-class ProductEloquentTrait implements ProductRepositoryInterface
+class ProductEloquentRepository implements ProductRepositoryInterface
 {
-    use MainEloquentTrait;
+    use EloquentRepositoryTrait;
 
     public function __construct(protected Product $product)
     {
