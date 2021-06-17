@@ -6,8 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Services\Interfaces\ProductServiceInterface;
 
-class ProductDeleteController extends Controller
+class ProductDeleteController
 {
+
     /**
      * ProductCreateController constructor.
      * @param ProductServiceInterface $productService

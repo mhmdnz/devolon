@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductCreateRequest;
 use App\Http\Requests\ProductInsertRequest;
 use App\Services\Interfaces\ProductServiceInterface;
-use Illuminate\Http\Request;
 
-class ProductUpsertController extends Controller
+class ProductUpsertController
 {
+
     /**
      * ProductUpsertController constructor.
      * @param ProductServiceInterface $productService

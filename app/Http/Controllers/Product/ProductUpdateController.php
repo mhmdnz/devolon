@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers\Product;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductCreateRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
 use App\Services\Interfaces\ProductServiceInterface;
-use Illuminate\Http\Request;
 
-class ProductUpdateController extends Controller
+class ProductUpdateController
 {
+
     /**
-     * ProductCreateController constructor.
+     * ProductUpdateController constructor.
      * @param ProductServiceInterface $productService
+     * @param ProductUpdateRequest $productRequest
      */
     public function __construct(
         private ProductServiceInterface $productService,

@@ -12,9 +12,7 @@ class OfferShowController
      * OfferShowController constructor.
      * @param ProductServiceInterface $productService
      */
-    public function __construct(
-        protected ProductServiceInterface $productService
-    )
+    public function __construct(private ProductServiceInterface $productService)
     {
     }
 
