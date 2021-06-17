@@ -8,6 +8,7 @@ use App\Http\Requests\ProductCreateRequest;
 use App\Models\Product;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 class ProductEloquentRepository extends MainEloquentRepository implements ProductRepositoryInterface
 {
@@ -18,5 +19,10 @@ class ProductEloquentRepository extends MainEloquentRepository implements Produc
     public function setModel(): Model
     {
         return $this->product;
+    }
+
+    public function getOffers(Product $product): Collection
+    {
+        return $product->offers;
     }
 }
