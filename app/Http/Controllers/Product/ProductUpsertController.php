@@ -8,7 +8,7 @@ use App\Http\Requests\ProductInsertRequest;
 use App\Services\Interfaces\ProductServiceInterface;
 use Illuminate\Http\Request;
 
-class ProductInsertController extends Controller
+class ProductUpsertController extends Controller
 {
     /**
      * ProductCreateController constructor.
@@ -27,7 +27,7 @@ class ProductInsertController extends Controller
     public function __invoke()
     {
         return response()->json([
-            'result' => $this->productService->insert($this->productRequest->toArray())
+            'result' => $this->productService->upsert($this->productRequest->toArray())
         ]);
     }
 }

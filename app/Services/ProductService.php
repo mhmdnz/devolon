@@ -31,8 +31,8 @@ class ProductService implements ProductServiceInterface
         return $this->productRepository->delete($product);
     }
 
-    public function insert(array $products): bool
+    public function upsert(array $products): bool
     {
-        return $this->productRepository->insert($products);
+        return $this->productRepository->upsert($products);
     }
 }

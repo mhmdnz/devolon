@@ -12,7 +12,7 @@ interface ProductServiceInterface
 {
     public function save(array $productRequest): Product;
 
-    public function insert(array $products): bool;
+    public function upsert(array $products): bool;
 
     public function update(Product $product, array $productItems): bool;
 

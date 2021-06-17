@@ -15,5 +15,5 @@ interface ProductRepositoryInterface
 
     public function delete(Product $product): bool;
 
-    public function insert(array $products): bool;
+    public function upsert(array $products): bool;
 }

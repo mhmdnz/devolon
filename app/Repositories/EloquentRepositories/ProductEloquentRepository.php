@@ -26,8 +26,8 @@ class ProductEloquentRepository implements ProductRepositoryInterface
         return $product->delete();
     }
 
-    public function insert(array $products): bool
+    public function upsert(array $products): bool
     {
-        return Product::insert($products);
+        return Product::upsert($products, 'name');
     }
 }

@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Product\ProductCreateController;
 use App\Http\Controllers\Product\ProductDeleteController;
-use App\Http\Controllers\Product\ProductInsertController;
+use App\Http\Controllers\Product\ProductUpsertController;
 use App\Http\Controllers\Product\ProductShowController;
 use App\Http\Controllers\Product\ProductUpdateController;
 use Illuminate\Support\Facades\Route;
@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/product', ProductCreateController::class);
 
-Route::post('/products', ProductInsertController::class);
+Route::post('/products', ProductUpsertController::class);
 
 Route::delete('/product/{product}', ProductDeleteController::class);
 
