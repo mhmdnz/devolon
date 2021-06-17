@@ -7,27 +7,16 @@ namespace App\Repositories\EloquentRepositories;
 use App\Http\Requests\ProductCreateRequest;
 use App\Models\Product;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
+use Illuminate\Database\Eloquent\Model;
 
-class ProductEloquentRepository implements ProductRepositoryInterface
+class ProductEloquentRepository extends MainEloquentRepository implements ProductRepositoryInterface
 {
-
-    public function save(array $productItems): Product
+    public function __construct(protected Product $product)
     {
-        return Product::create($productItems);
     }
 
-    public function update(Product $product, array $productItems): bool
+    public function setModel(): Model
     {
-        return $product->update($productItems);
-    }
-
-    public function delete(Product $product): bool
-    {
-        return $product->delete();
-    }
-
-    public function upsert(array $products): bool
-    {
-        return Product::upsert($products, 'name');
+        return $this->product;
     }
 }
