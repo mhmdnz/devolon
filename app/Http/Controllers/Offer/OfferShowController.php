@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Offer;
 
+use App\Http\Resources\OfferCollection;
 use App\Models\Product;
 use App\Services\Interfaces\ProductServiceInterface;
 
@@ -18,10 +19,11 @@ class OfferShowController
     }
 
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @param Product $product
+     * @return OfferCollection
      */
     public function __invoke(Product $product)
     {
-        return response()->json($this->productService->getOffers($product));
+        return OfferCollection::make($this->productService->getOffers($product));
     }
 }

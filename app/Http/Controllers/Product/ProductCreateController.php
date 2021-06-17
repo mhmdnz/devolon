@@ -19,7 +19,7 @@ class ProductCreateController extends Controller
     )
     {
     }
-    
+
 
     /**
      * @return ProductResource
