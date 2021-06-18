@@ -25,4 +25,9 @@ trait EloquentRepositoryTrait
     {
         return $this->getModel()::upsert($models, 'name');
     }
+
+    public function find($id): Model
+    {
+        return $this->getModel()::find($id);
+    }
 }

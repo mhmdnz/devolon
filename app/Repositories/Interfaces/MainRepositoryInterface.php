@@ -17,4 +17,6 @@ interface MainRepositoryInterface
     public function upsert(array $models): bool;
 
     public function getModel(): Model;
+
+    public function find($id): Model;
 }

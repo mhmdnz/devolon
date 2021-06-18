@@ -11,4 +11,6 @@ use Illuminate\Support\Collection;
 interface ProductRepositoryInterface extends MainRepositoryInterface
 {
     public function getOffers(Product $product): Collection;
+
+    public function getOffersByQuantityLimit(Product $product, int $limit): Collection;
 }

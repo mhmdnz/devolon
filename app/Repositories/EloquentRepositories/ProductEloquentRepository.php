@@ -24,4 +24,10 @@ class ProductEloquentRepository implements ProductRepositoryInterface
     {
         return $product->offers;
     }
+
+
+    public function getOffersByQuantityLimit(Product $product, int $limit): Collection
+    {
+        return $product->offers()->where('quantity', '<=', $limit)->get();
+    }
 }

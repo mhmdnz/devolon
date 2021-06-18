@@ -179,6 +179,7 @@ return [
         \App\Providers\OfferRepositoryProvider::class,
         \App\Providers\OfferServiceProvider::class,
         \App\Providers\CheckoutServiceProvider::class,
+        \App\Providers\CheckoutDTOProvider::class,
     ],
 
     /*
