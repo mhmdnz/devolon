@@ -13,6 +13,8 @@ use Illuminate\Support\Collection;
 
 class CheckoutService implements CheckoutServiceInterface
 {
+    const WITHOUT_OFFER_NAME = 'Without Offer';
+
     public function __construct(
         private ProductRepositoryInterface $productRepository
     )
@@ -32,10 +34,7 @@ class CheckoutService implements CheckoutServiceInterface
             $priceWithoutDiscount += ($product->unit_price * count($content));
             $productBestPrice = $this->getBestPrice($product, count($content));
             $bestPrice += $productBestPrice->sum('price');
-            $offers[] = $productBestPrice
-                ->whereNotNull('offerName')
-                ->where('offerName', '!=' ,'without')
-                ->pluck('offerName');
+            $offers[$product->name] = $productBestPrice;
         });
         $checkoutDTO->setPrice($bestPrice);
         $checkoutDTO->setPriceWithoutDiscount($priceWithoutDiscount);
@@ -100,7 +99,7 @@ class CheckoutService implements CheckoutServiceInterface
                 });
             }
         }
-//die(json_encode($finalState));
+
         return $finalState;
     }
 
@@ -126,14 +125,14 @@ class CheckoutService implements CheckoutServiceInterface
         $newState->setDiscountPercent($currentBestOffer->discountPercent);
         $currentState->add($newState);
         if ($retain > 1 && $retain >= $minOfferQuantity) {
-            $currentBestOffer = $offerDiscountCollection->where('quantity', '<=', $repeatCount)
+            $currentBestOffer = $offerDiscountCollection->where('quantity', '<=', $retain)
                 ->sortByDesc('discountPercent')
                 ->first();
 
             return $this->getBestPriceByRepeatCount($product, $offerDiscountCollection, $retain, $currentBestOffer, $currentState);
         } elseif ($retain != 0) {
             $withoutOfferState = new CheckoutBestOfferDTO();
-            $withoutOfferState->setOfferName('without');
+            $withoutOfferState->setOfferName(self::WITHOUT_OFFER_NAME);
             $withoutOfferState->setQuantity($retain);
             $withoutOfferState->setPrice($product->unit_price * $retain);
             $withoutOfferState->setDiscountPercent(0);
@@ -165,7 +164,7 @@ class CheckoutService implements CheckoutServiceInterface
     private function getWithoutOfferStateCollection($repeatCount, Product $product): Collection
     {
         $withoutOfferState = new CheckoutBestOfferDTO();
-        $withoutOfferState->setOfferName('without');
+        $withoutOfferState->setOfferName(self::WITHOUT_OFFER_NAME);
         $withoutOfferState->setQuantity($repeatCount);
         $withoutOfferState->setPrice($repeatCount * $product->unit_price);
         $withoutOfferState->setDiscountPercent(0);

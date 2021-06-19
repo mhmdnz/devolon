@@ -37,7 +37,7 @@ class CheckoutDTO implements CheckoutDTOInterface, \JsonSerializable
             'total_price' => $this->price,
             'price_without_discount' => $this->priceWithoutDiscount,
             'discount' => $this->discount,
-            'offers' => $this->offers
+            'offersPerProduct' => $this->offers
         ];
     }
 }
