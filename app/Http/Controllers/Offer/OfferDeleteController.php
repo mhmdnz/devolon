@@ -22,12 +22,10 @@ class OfferDeleteController
     /**
      * @param Product $product
      * @param Offer $offer
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function __invoke(Product $product, Offer $offer)
     {
-        $this->offerService->deleteFromProduct($product, $offer);
-
-        return response()->noContent();
+        return response()->json($this->offerService->deleteFromProduct($product, $offer));
     }
 }

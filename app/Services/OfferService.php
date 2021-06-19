@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Http\DTO\BooleanResponseDTO;
+use App\Http\DTO\BooleanResponseDTOInterface;
 use App\Models\Offer;
 use App\Models\Product;
 use App\Repositories\Interfaces\MainRepositoryInterface;
@@ -26,13 +28,13 @@ class OfferService implements OfferServiceInterface
         return $this->offerRepository->saveOnProduct($product, $offerItems);
     }
 
-    public function deleteFromProduct(Product $product, Offer $offer): bool
+    public function deleteFromProduct(Product $product, Offer $offer): BooleanResponseDTOInterface
     {
         if ($this->offerRepository->getProduct($offer) == $product) {
 
             return $this->offerRepository->delete($offer);
         }
 
-        return false;
+        return (new BooleanResponseDTO())->setResult(false);
     }
 }
