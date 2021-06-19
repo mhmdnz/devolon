@@ -34,10 +34,10 @@ class CheckoutDTO implements CheckoutDTOInterface, \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'total_price' => $this->price,
+            'price_with_discount' => $this->price,
             'price_without_discount' => $this->priceWithoutDiscount,
             'discount' => $this->discount,
-            'offersPerProduct' => $this->offers
+            'discount_calculation' => $this->offers
         ];
     }
 }

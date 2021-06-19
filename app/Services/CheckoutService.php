@@ -21,6 +21,12 @@ class CheckoutService implements CheckoutServiceInterface
     {
     }
 
+    /**
+     * This function will just call getBestPrice function for each product
+     *
+     * @param array $productIds
+     * @return CheckoutDTOInterface
+     */
     public function calculateCheckout(array $productIds): CheckoutDTOInterface
     {
         $productIdCollection = collect($productIds);
@@ -36,15 +42,23 @@ class CheckoutService implements CheckoutServiceInterface
             $bestPrice += $productBestPrice->sum('price');
             $offers[$product->name] = $productBestPrice;
         });
-        $checkoutDTO->setPrice($bestPrice);
+        $checkoutDTO->setPrice($bestPrice > 0 ? $bestPrice : $priceWithoutDiscount);
         $checkoutDTO->setPriceWithoutDiscount($priceWithoutDiscount);
-        $checkoutDTO->setDiscount($priceWithoutDiscount - $bestPrice);
+        $checkoutDTO->setDiscount($bestPrice > 0 ? $priceWithoutDiscount - $bestPrice : 0);
         $checkoutDTO->setOffers($offers);
 
         return $checkoutDTO;
     }
 
-    public function getBestPrice(Product $product, $repeatCount): Collection
+    /**
+     * This function will initiate the processing data to find the best offer for the
+     * given product according to number of repeat in checkout request
+     *
+     * @param Product $product
+     * @param $repeatCount
+     * @return Collection
+     */
+    private function getBestPrice(Product $product, $repeatCount): Collection
     {
         if ($repeatCount == 1) {
             return $this->getWithoutOfferStateCollection($repeatCount, $product);
@@ -56,6 +70,8 @@ class CheckoutService implements CheckoutServiceInterface
     }
 
     /**
+     * This function will calculate all offers discount percent according to current product price
+     *
      * @param Collection $offers
      * @param Product $product
      * @return Collection
@@ -76,20 +92,25 @@ class CheckoutService implements CheckoutServiceInterface
         return $offersDiscountCollection;
     }
 
+    /**
+     * This function is the one which decide the best(lowest) price from all the offer collections
+     * and if find the highest discount, will return the result
+     *
+     * @param Product $product
+     * @param $offerDiscountCollection
+     * @param $repeatCount
+     * @return Collection
+     */
     private function findBestOffer(Product $product, $offerDiscountCollection, $repeatCount): Collection
     {
-        $currentBestOffer = $offerDiscountCollection->where('quantity', '<=', $repeatCount)->sortByDesc('discountPercent')->first();
-        if (!$currentBestOffer) {
-            return $this->getWithoutOfferStateCollection($repeatCount, $product);
-        }
-        $finalState = $this->getBestPriceByRepeatCount($product, $offerDiscountCollection, $repeatCount, $currentBestOffer);
-        $result = $this->calculateStateDiscount($finalState);
-        $checkedBestOffers[] = $currentBestOffer->id;
-        while ($result < $offerDiscountCollection->whereNotIn('id', $checkedBestOffers)->max('discountPercent')) {
+        $finalState = $this->getWithoutOfferStateCollection($repeatCount, $product);
+        $checkedBestOffers = [];
+        $result = 0;
+        do {
             $currentBestOffer = $offerDiscountCollection->where('quantity', '<=', $repeatCount)->whereNotIn('id', $checkedBestOffers)->sortByDesc('discountPercent')->first();
-            $checkedBestOffers[] = $currentBestOffer->id;
             if ($currentBestOffer) {
-                $finalState = $this->getBestPriceByRepeatCount($product, $offerDiscountCollection, $repeatCount, $currentBestOffer);
+                $checkedBestOffers[] = $currentBestOffer->id;
+                $finalState = $this->findStateByGivenBestOffer($product, $offerDiscountCollection, $repeatCount, $currentBestOffer);
                 $newResult = $this->calculateStateDiscount($finalState);
                 if ($newResult > $result) {
                     $result = $newResult;
@@ -98,12 +119,23 @@ class CheckoutService implements CheckoutServiceInterface
                     return $item->id == $currentBestOffer->id;
                 });
             }
-        }
+        } while ($result < $offerDiscountCollection->whereNotIn('id', $checkedBestOffers)->max('discountPercent'));
 
         return $finalState;
     }
 
-    private function getBestPriceByRepeatCount(
+    /**
+     * This function will calculate discount by starting from the given currentBestOffer
+     * and send the result back to findBestOffer to be compared by the other results
+     *
+     * @param Product $product
+     * @param $offerDiscountCollection
+     * @param $repeatCount
+     * @param $currentBestOffer
+     * @param null $currentState
+     * @return Collection
+     */
+    private function findStateByGivenBestOffer(
         Product $product,
         $offerDiscountCollection,
         $repeatCount,
@@ -129,7 +161,7 @@ class CheckoutService implements CheckoutServiceInterface
                 ->sortByDesc('discountPercent')
                 ->first();
 
-            return $this->getBestPriceByRepeatCount($product, $offerDiscountCollection, $retain, $currentBestOffer, $currentState);
+            return $this->findStateByGivenBestOffer($product, $offerDiscountCollection, $retain, $currentBestOffer, $currentState);
         } elseif ($retain != 0) {
             $withoutOfferState = new CheckoutBestOfferDTO();
             $withoutOfferState->setOfferName(self::WITHOUT_OFFER_NAME);
@@ -143,6 +175,8 @@ class CheckoutService implements CheckoutServiceInterface
     }
 
     /**
+     * This function will calculate the discount for the given state
+     *
      * @param Collection $state
      * @return float|int
      */
@@ -157,6 +191,9 @@ class CheckoutService implements CheckoutServiceInterface
     }
 
     /**
+     * This function will just return a Without_offer_name CheckoutBestOfferDTO
+     * for those are not be able to get any discount
+     *
      * @param $repeatCount
      * @param Product $product
      * @return Collection
