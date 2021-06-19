@@ -25,7 +25,7 @@ trait EloquentRepositoryTrait
 
     public function upsert(array $models): BooleanResponseDTOInterface
     {
-        return (new BooleanResponseDTO())->setResult($this->getModel()::upsert($models, 'name'));
+        return (new BooleanResponseDTO())->setResult($this->getModel()::upsert($models, 'id'));
     }
 
     public function find($id): Model
