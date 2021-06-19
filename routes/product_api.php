@@ -22,8 +22,8 @@ Route::post('/product', ProductCreateController::class);
 
 Route::post('/products', ProductUpsertController::class);
 
-Route::delete('/product/{product}', ProductDeleteController::class);
+Route::delete('/products/{product}', ProductDeleteController::class);
 
-Route::put('/product/{product}', ProductUpdateController::class);
+Route::put('/products/{product}', ProductUpdateController::class);
 
-Route::get('/product/{product}', ProductShowController::class);
+Route::get('/products/{product}', ProductShowController::class);

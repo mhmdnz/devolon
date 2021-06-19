@@ -15,8 +15,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/product/{product}/offer', OfferCreateController::class);
+Route::post('/products/{product}/offer', OfferCreateController::class);
 
-Route::get('/product/{product}/offers', OfferShowController::class);
+Route::get('/products/{product}/offers', OfferShowController::class);
 
-Route::delete('/product/{product}/offer/{offer}', OfferDeleteController::class);
+Route::delete('/products/{product}/offers/{offer}', OfferDeleteController::class);
