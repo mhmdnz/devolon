@@ -63,6 +63,7 @@ class CheckoutService implements CheckoutServiceInterface
         if ($repeatCount == 1) {
             return $this->getWithoutOfferStateCollection($repeatCount, $product);
         }
+
         $offers = $this->productRepository->getOffersByQuantityLimit($product, $repeatCount);
         $offerDiscountCollection = $this->getOffersDiscountCollection($offers, $product);
 
@@ -80,13 +81,16 @@ class CheckoutService implements CheckoutServiceInterface
     {
         $offersDiscountCollection = collect();
         $offers->each(function ($offer) use ($offersDiscountCollection, $product) {
-            $offerDiscountDTO = new OfferDiscountDTO();
-            $offerDiscountDTO->setOfferId($offer->id);
-            $offerDiscountDTO->setOfferName($offer->name);
-            $offerDiscountDTO->setPrice($offer->price);
-            $offerDiscountDTO->setQuantity($offer->quantity);
-            $offerDiscountDTO->setDiscountPercent(100 - (($offer->price * 100) / ($product->unit_price * $offer->quantity)));
-            $offersDiscountCollection->add($offerDiscountDTO);
+            $discountPercent = 100 - (($offer->price * 100) / ($product->unit_price * $offer->quantity));
+            if ($discountPercent > 0) {
+                $offerDiscountDTO = new OfferDiscountDTO();
+                $offerDiscountDTO->setOfferId($offer->id);
+                $offerDiscountDTO->setOfferName($offer->name);
+                $offerDiscountDTO->setPrice($offer->price);
+                $offerDiscountDTO->setQuantity($offer->quantity);
+                $offerDiscountDTO->setDiscountPercent($discountPercent);
+                $offersDiscountCollection->add($offerDiscountDTO);
+            }
         });
 
         return $offersDiscountCollection;
@@ -115,7 +119,7 @@ class CheckoutService implements CheckoutServiceInterface
                 if ($newResult > $result) {
                     $result = $newResult;
                 }
-                $offerDiscountCollection = $offerDiscountCollection->reject(function ($item, $value) use ($currentBestOffer) {
+                $offerDiscountCollection = $offerDiscountCollection->reject(function ($item) use ($currentBestOffer) {
                     return $item->id == $currentBestOffer->id;
                 });
             }
@@ -182,12 +186,12 @@ class CheckoutService implements CheckoutServiceInterface
      */
     private function calculateStateDiscount(Collection $state)
     {
-        $firstStateResult = 0;
-        $state->each(function ($state) use (&$firstStateResult) {
-            $firstStateResult += $state->quantity * $state->discountPercent;
+        $stateResult = 0;
+        $state->each(function ($state) use (&$stateResult) {
+            $stateResult += $state->quantity * $state->discountPercent;
         });
 
-        return $firstStateResult / $state->sum('quantity');
+        return $stateResult / $state->sum('quantity');
     }
 
     /**
