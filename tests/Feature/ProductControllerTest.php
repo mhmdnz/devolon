@@ -36,14 +36,14 @@ class ProductControllerTest extends TestCase
     {
         $product = (Product::factory(1)->create())->first();
         $this->assertDatabaseHas('products', ['name' => $product->name]);
-        $response = $this->deleteJson("/api/product/$product->id");
+        $response = $this->deleteJson("/api/products/$product->id");
         $this->assertDatabaseMissing('products', ['name' => $product->name]);
         $response->assertStatus(200);
     }
 
     public function test_delete_wrong_product_id()
     {
-        $response = $this->deleteJson("/api/product/111");//wrong id
+        $response = $this->deleteJson("/api/products/111");//wrong id
         $response->assertSee('No query results for model');
         $response->assertStatus(404);
     }
@@ -52,7 +52,7 @@ class ProductControllerTest extends TestCase
     {
         $product = (Product::factory(1)->create())->first();
         $this->assertDatabaseHas('products', ['name' => $product->name]);
-        $this->putJson("/api/product/$product->id", [
+        $this->putJson("/api/products/$product->id", [
            'name' => $product->name . 'changed_name'
         ]);
         $this->assertDatabaseHas('products', ['name' => $product->name . 'changed_name']);

@@ -23,7 +23,7 @@ class OfferFactory extends Factory
      */
     public function definition()
     {
-        $product = \App\Models\Product::factory(1)->make();
+        $product = \App\Models\Product::factory()->create();
 
         return [
             'product_id' => $product->id,
