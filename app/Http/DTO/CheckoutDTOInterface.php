@@ -8,28 +8,13 @@ use Ramsey\Uuid\Type\Decimal;
 
 interface CheckoutDTOInterface
 {
-    /**
-     * @return mixed
-     */
-    public function getPrice(): int;
-
-    /**
-     * @param mixed $price
-     */
     public function setPrice($price): void;
 
-    /**
-     * @return mixed
-     */
-    public function getDiscount(): int;
-
-    /**
-     * @param mixed $discount
-     */
     public function setDiscount($discount): void;
 
-    /**
-     * @return array
-     */
+    public function setOffers($offers): void;
+
+    public function setPriceWithoutDiscount($price): void;
+
     public function jsonSerialize(): array;
 }

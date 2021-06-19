@@ -6,49 +6,38 @@ use Ramsey\Uuid\Type\Decimal;
 
 class CheckoutDTO implements CheckoutDTOInterface, \JsonSerializable
 {
-    private $price;
-    private $discount;
+    public $price;
+    public $discount;
+    public $offers;
+    public $priceWithoutDiscount;
 
-    /**
-     * @return mixed
-     */
-    public function getPrice(): int
-    {
-        return $this->price;
-    }
-
-    /**
-     * @param mixed $price
-     */
     public function setPrice($price): void
     {
         $this->price = $price;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDiscount(): int
-    {
-        return $this->discount;
-    }
-
-    /**
-     * @param mixed $discount
-     */
     public function setDiscount($discount): void
     {
         $this->discount = $discount;
     }
 
-    /**
-     * @return array
-     */
+    public function setOffers($offers): void
+    {
+        $this->offers = $offers;
+    }
+
+    public function setPriceWithoutDiscount($price): void
+    {
+        $this->priceWithoutDiscount = $price;
+    }
+
     public function jsonSerialize(): array
     {
         return [
-            'price' => $this->getPrice(),
-            'discount' => $this->getDiscount()
+            'total_price' => $this->price,
+            'price_without_discount' => $this->priceWithoutDiscount,
+            'discount' => $this->discount,
+            'offers' => $this->offers
         ];
     }
 }
