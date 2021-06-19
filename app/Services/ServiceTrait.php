@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Http\DTO\BooleanResponseDTOInterface;
 use Illuminate\Database\Eloquent\Model;
 
 trait ServiceTrait
@@ -11,17 +12,17 @@ trait ServiceTrait
         return $this->getModelRepository()->save($modelItems);
     }
 
-    public function update(Model $model, array $modelItems): bool
+    public function update(Model $model, array $modelItems): BooleanResponseDTOInterface
     {
         return $this->getModelRepository()->update($model, $modelItems);
     }
 
-    public function delete(Model $model): bool
+    public function delete(Model $model): BooleanResponseDTOInterface
     {
         return $this->getModelRepository()->delete($model);
     }
 
-    public function upsert(array $models): bool
+    public function upsert(array $models): BooleanResponseDTOInterface
     {
         return $this->getModelRepository()->upsert($models);
     }
