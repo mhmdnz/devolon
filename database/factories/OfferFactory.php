@@ -23,13 +23,11 @@ class OfferFactory extends Factory
      */
     public function definition()
     {
-        $product = \App\Models\Product::factory()->create();
-
         return [
-            'product_id' => $product->id,
+            'product_id' => \App\Models\Product::factory()->create()->id,
             'name' => Str::random(10),
             'quantity' => rand(2,50),
-            'price' => $product->price + rand(2,50),
+            'price' => rand(150,250),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()
         ];
