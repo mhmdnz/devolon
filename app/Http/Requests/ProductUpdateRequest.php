@@ -15,7 +15,7 @@ class ProductUpdateRequest extends FormRequest
     {
         return [
             'name' => 'min:3|max:30',
-            'unit_price' => 'numeric'
+            'unit_price' => 'numeric|min:1'
         ];
     }
 }

@@ -15,8 +15,8 @@ class OfferCreateRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:30',
-            'quantity' => 'required|integer|between:1,100',
-            'price' => 'required|numeric'
+            'quantity' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:1'
         ];
     }
 }

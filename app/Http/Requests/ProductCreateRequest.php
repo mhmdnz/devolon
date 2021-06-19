@@ -15,7 +15,7 @@ class ProductCreateRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:30',
-            'unit_price' => 'required|numeric'
+            'unit_price' => 'required|numeric|min:1'
         ];
     }
 }
