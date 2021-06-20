@@ -1,62 +1,173 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Devolon
+<hr>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> Devolon is an intelligent application to help customers on finding best offers for their purchases
 
-## About Laravel
+> The Application is wrriten on Laravel, if you are not familier with the environment please check the link below:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+[Laravel Installation](https://laravel.com/docs/7.x/installation)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Topics
+- [Description](#Description)
+- [How is it works](#How-is-it-works)
+- [Installation guid](#Installation-Guid)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# Description
+<hr>
 
-## Learning Laravel
+Develon that can store all your products, define some offers and prepare a checkout list for
+customers.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## How is it works ?
+<hr>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Lets imagine you have following products with special prices:
 
-## Laravel Sponsors
+| Name | Price | Special Price| 
+| :----------- | :------------: | :------------: |  
+| A   |   50  | 3 for 130|
+| B   |   30  | 2 for 45|
+| C   |   20  | |
+| D   |   15  | |
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
+### The following table would be the sample of user checkout :
 
-## Contributing
+| User Items | Price Without Discount | Price With Discount | 
+| :----------- | :------------: | :------------: |  
+| AAA   |   150  | 130 |
+| AB   |   80  | 80 |
+| AABB   |   160  | 145 |
+| AAABB   |   210  | 175 |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+<hr>
 
-## Code of Conduct
+## This system also will be able to find the "best offer" for the user
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Look at this example :
 
-## Security Vulnerabilities
+| Name | Price | Special Price| 
+| :----------- | :------------: | :------------: |  
+| A   |   20  | 2 for 30 , 3 for 50|
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+| User Items | Price Without Discount | Price With Discount | 
+| :----------- | :------------: | :------------: |  
+| AA   |   40  | 30 |
+| AAA   |   60  | 50 |
 
-## License
+> What about if user want to take 8 of A => AAAAAAAA
+<br>
+> Which rule should we take to get most discount for the user ?
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+#### Let`s calculate with first rule ( AA = 30 ) :
+
+AA | AA | AA | AA = 120
+
+#### Let`s calculate with first rule ( AAA = 50 ) :
+
+AAA | AAA | A | A = 140
+
+#### Let`s use the combinations :
+
+AAA | AAA | AA = 130
+<br>
+AAA | AA | AA | A = 130
+<br>
+
+>notice : we still can create more combinations, but the result is clear
+
+###Result :
+
+
+- [ ] AAA | AAA | A | A = 140
+- [ ] AAA | AAA | AA = 130
+- [x] AA | AA | AA | AA = 120
+
+# Installation Guid
+
+### Clone project From Git
+
+```sh
+$ mkdir devolon
+$ cd devolon
+$ git clone "https://github.com/mhmdnz/devolon.git" .
+```
+
+### Edit env File
+
+To run laravel applications you have to define your system configuration for the laravel in .env file
+
+```sh
+$ mv .env.example .env
+$ vim .env
+```
+
+### Install Composer Packages
+
+```sh
+$ composer install
+```
+
+### Run DB migrations
+
+> Do not forget to create your database and give it to the .env file or you will get an Error<br>
+> - If you got any error you could simply use <strong>fresh</strong> parameter<br>
+> - Or if you are not familier with laravel migrations just drop and create your database again
+```sh
+//Create database example
+//login to mysql console then use below command
+$ mysql -u{enter user name here} -p{enter password here}
+$ Create Database devolon
+```
+```sh
+$ php artisan migrate --seed
+```
+
+### Run Tests
+
+```sh
+//you could run all the tests by running below command in the project root
+$ phpunit
+//or 
+$ ./vendor/bin/phpunit
+```
+
+```sh
+//you could run only one test by using this command
+$ phpunit /address of the test
+```
+<hr>
+
+# Docker Installation Guid
+
+  - [Clone project from Git repository](https://github.com/mhmdnz/devolon.git)
+
+```sh
+$ mkdir devolon
+$ cd devolon
+$ git clone "https://github.com/mhmdnz/devolon.git" .
+```
+
+```sh
+//it will bring project up and ready to use
+$ docker-compose up --build -d
+$ docker exec -it php sh /tmp/Prepration.sh
+```
+> you should be able to see : localhost:8080
+## Some helpful commands
+
+```sh
+//to Run Tests
+$ docker exec -it php sh /tmp/RunTests.sh
+
+//to get fresh migration
+$ docker exec -it php sh /tmp/FreshMigrations.sh
+
+//to run composer install
+$ docker exec -it php sh /tmp/ComposerInstall.sh
+```
+<hr>
+
+>Notice : There is a simple Swagger documentation to explain about the APIs, you will
+> also be able to send requests from that

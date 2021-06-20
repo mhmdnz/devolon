@@ -1,0 +1,364 @@
+swagger: '2.0'
+info:
+  description: Devolon
+  version: 1.0.0
+  title: Devolon
+  contact:
+    email: mhmd_nzri@yahoo.com
+host: 'localhost:8080'
+basePath: /api
+schemes: ['http']
+produces:
+  - application/json
+paths:
+  /products:
+    post:
+      tags:
+        - Product
+      summary: create array of products
+      description: 'To save many products in system'
+      operationId: Create Products
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: array
+            required:
+              - name
+              - unit_price
+            properties:
+              name:
+                type: string
+              unit_price:
+                type: integer
+            example:
+              - unit_price: 10
+                name: product1
+              - unit_price: 20
+                name: product2
+      responses:
+        '201':
+          description: create success
+          schema:
+            $ref: "#/definitions/Product"
+  /product:
+    post:
+      tags:
+        - Product
+      summary: create a new product
+      description: 'To save a single product in system'
+      operationId: Create Product
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - name
+              - unit_price
+            properties:
+              name:
+                type: string
+                example: "product1"
+              unit_price:
+                type: integer
+                example: 20
+      responses:
+        '201':
+          description: create success
+          schema:
+            $ref: "#/definitions/Product"
+
+  /products/{product}:
+    get:
+      tags:
+        - Product
+      summary: get a specific product
+      description: 'you could get a product by its id'
+      operationId: product
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: login success
+          schema:
+            $ref: '#/definitions/Product'
+      parameters:
+        - in: path
+          name: product
+          schema:
+            type: integer
+            example: 74
+          required: true
+          description: Numeric ID of the product to get
+    put:
+      tags:
+        - Product
+      summary: update an exist product
+      description: 'By using this API you could update an exist product easily'
+      operationId: Update Product
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: product
+          schema:
+            type: integer
+            example: 74
+          required: true
+          description: Numeric ID of the product to get
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - name
+              - unit_price
+            properties:
+              name:
+                type: string
+                example: "new_name"
+              unit_price:
+                type: integer
+                example: 300
+      responses:
+        '201':
+          description: update success
+          schema:
+            $ref: "#/definitions/Product"
+    delete:
+      tags:
+        - Product
+      summary: delete a specific product
+      description: 'you could delete a product by its id'
+      operationId: DeleteProduct
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: login success
+          schema:
+            $ref: '#/definitions/Product'
+      parameters:
+        - in: path
+          name: product
+          schema:
+            type: integer
+            example: 74
+          required: true
+          description: Numeric ID of the product to get
+
+  /products/{product}/offer:
+    post:
+      tags:
+        - Offer
+      summary: create new offer for the given product
+      description: 'you could create a new offer for the given product'
+      operationId: CreateOffer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: product
+          schema:
+            type: integer
+            example: 74
+          required: true
+          description: Numeric ID of the product to get
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - name
+              - quantity
+              - price
+            properties:
+              name:
+                type: string
+                example: "offer1"
+              quantity:
+                type: integer
+                example: 2
+              price:
+                type: integer
+                example: 20
+      responses:
+        '201':
+          description: create success
+          schema:
+            $ref: "#/definitions/Offer"
+
+  /products/{product}/offers:
+    get:
+      tags:
+        - Offer
+      summary: get all offers for the product
+      description: 'you could get all offers for a product'
+      operationId: ShowOffer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: login success
+          schema:
+            $ref: '#/definitions/Offer'
+      parameters:
+        - in: path
+          name: product
+          schema:
+            type: integer
+            example: 74
+          required: true
+          description: Numeric ID of the product to get
+  /products/{product}/offers/{offer}:
+    delete:
+      tags:
+        - Offer
+      summary: delete a specific offer
+      description: 'you could delete an offer by its id'
+      operationId: DeleteOffer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: login success
+          schema:
+            $ref: '#/definitions/Offer'
+      parameters:
+        - in: path
+          name: product
+          schema:
+            type: integer
+            example: 74
+          required: true
+          description: Numeric ID of the product to get
+        - in: path
+          name: offer
+          schema:
+            type: integer
+            example: 26
+          required: true
+          description: Numeric ID of the product to get
+  /checkout:
+    post:
+      tags:
+        - checkout
+      summary: get the checkout
+      description: 'get best price for the given products'
+      operationId: checkout
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: array
+            required:
+              - id
+            properties:
+              id:
+                type: integer
+            example:
+              - id: 74
+              - id: 74
+              - id: 74
+      responses:
+        '200':
+          description: get checkout successfuly
+          schema:
+            $ref: "#/definitions/Checkout"
+definitions:
+  Product:
+    type: object
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: string
+        example: product 1
+      unit_price:
+        type: "decimal(8,2)"
+        example: 20.00
+      created_at:
+        type: "timestamp"
+        example: "2021-06-20 09:51:17"
+      updated_at:
+        type: "timestamp"
+        example: "2021-06-20 09:51:17"
+  Offer:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        example: 1
+      name:
+        type: "string"
+        example: "offer1"
+      product_id:
+        type: "bigint unsigned"
+        example: 1
+      quantity:
+        type: "integer"
+        example: 10
+      price:
+        type: "decimal(8,2)"
+        example: 10.00
+      created_at:
+        type: "timestamp"
+        example: "2021-06-20 09:51:17"
+      updated_at:
+        type: "timestamp"
+        example: "2021-06-20 09:51:17"
+  Checkout:
+    type: object
+    properties:
+      price_with_discount:
+        type: "integer"
+        example: 20
+      price_without_discount:
+        type: integer
+        example: 20
+      discount:
+        type: integer
+        example: 20
+      discount_calculation:
+          type: object
+          $ref: '#/definitions/BestOffer'
+  BestOffer:
+    type: object
+    properties:
+      offerName:
+        type: "string"
+        example: offer1
+      price:
+        type: integer
+        example: 20
+      discountPercent:
+        type: integer
+        example: 20
+      quantity:
+        type: integer
+        example: 3
