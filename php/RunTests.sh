@@ -1,1 +1,1 @@
-/var/www/html/devolon/vendor/bin/phpunit
+php artisan test
