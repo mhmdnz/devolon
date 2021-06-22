@@ -9,7 +9,7 @@ class ProductOfferRelationErrorResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'error_message' => $this->error
+            'error_message' => $this->getError()
         ];
     }
 }

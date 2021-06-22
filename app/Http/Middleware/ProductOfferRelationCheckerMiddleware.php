@@ -25,7 +25,7 @@ class ProductOfferRelationCheckerMiddleware
             return $next($request);
         }
         $productOfferRelationErrorDTO = new ProductOfferRelationErrorDTO();
-        $productOfferRelationErrorDTO->error = self::PRODUCT_OFFER_RELATION_ERROR_MESSAGE;
+        $productOfferRelationErrorDTO->setError(self::PRODUCT_OFFER_RELATION_ERROR_MESSAGE);
 
         return ProductOfferRelationErrorResource::make($productOfferRelationErrorDTO);
     }
