@@ -23,11 +23,6 @@ trait EloquentRepositoryTrait
         return (new BooleanResponseDTO())->setResult($model->delete());
     }
 
-    public function upsert(array $models): BooleanResponseDTOInterface
-    {
-        return (new BooleanResponseDTO())->setResult($this->getModel()::upsert($models, 'id'));
-    }
-
     public function find($id): Model
     {
         return $this->getModel()::find($id);

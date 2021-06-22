@@ -15,40 +15,6 @@ paths:
     post:
       tags:
         - Product
-      summary: create array of products
-      description: 'To save many products in system'
-      operationId: Create Products
-      consumes:
-        - application/json
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: body
-          schema:
-            type: array
-            required:
-              - name
-              - unit_price
-            properties:
-              name:
-                type: string
-              unit_price:
-                type: integer
-            example:
-              - unit_price: 10
-                name: product1
-              - unit_price: 20
-                name: product2
-      responses:
-        '201':
-          description: create success
-          schema:
-            $ref: "#/definitions/Product"
-  /product:
-    post:
-      tags:
-        - Product
       summary: create a new product
       description: 'To save a single product in system'
       operationId: Create Product

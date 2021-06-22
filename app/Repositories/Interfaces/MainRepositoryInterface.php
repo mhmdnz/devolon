@@ -15,8 +15,6 @@ interface MainRepositoryInterface
 
     public function delete(Model $model): BooleanResponseDTOInterface;
 
-    public function upsert(array $models): BooleanResponseDTOInterface;
-
     public function getModel(): Model;
 
     public function find($id): Model;

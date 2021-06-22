@@ -12,8 +12,6 @@ interface MainServiceInterface
 {
     public function save(array $modelItems): Model;
 
-    public function upsert(array $models): BooleanResponseDTOInterface;
-
     public function update(Model $model, array $modelItems): BooleanResponseDTOInterface;
 
     public function delete(Model $model): BooleanResponseDTOInterface;

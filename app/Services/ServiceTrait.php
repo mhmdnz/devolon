@@ -21,9 +21,4 @@ trait ServiceTrait
     {
         return $this->getModelRepository()->delete($model);
     }
-
-    public function upsert(array $models): BooleanResponseDTOInterface
-    {
-        return $this->getModelRepository()->upsert($models);
-    }
 }

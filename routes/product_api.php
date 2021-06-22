@@ -18,9 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/product', ProductCreateController::class);
-
-Route::post('/products', ProductUpsertController::class);
+Route::post('/products', ProductCreateController::class);
 
 Route::delete('/products/{product}', ProductDeleteController::class);
 
