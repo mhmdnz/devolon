@@ -11,11 +11,11 @@ interface MainRepositoryInterface
 {
     public function save(array $modelItems): Model;
 
-    public function update(Model $model, array $modelItems): BooleanResponseDTOInterface;
+    public function update(Model $model, array $modelItems): bool;
 
-    public function delete(Model $model): BooleanResponseDTOInterface;
+    public function delete(Model $model): bool;
 
     public function getModel(): Model;
 
-    public function find($id): Model;
+    public function findOrFail($id): Model;
 }

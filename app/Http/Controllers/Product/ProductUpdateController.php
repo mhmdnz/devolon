@@ -10,11 +10,6 @@ use App\Services\Interfaces\ProductServiceInterface;
 class ProductUpdateController
 {
 
-    /**
-     * ProductUpdateController constructor.
-     * @param ProductServiceInterface $productService
-     * @param ProductUpdateRequest $productRequest
-     */
     public function __construct(
         private ProductServiceInterface $productService,
         private ProductUpdateRequest $productRequest
@@ -22,10 +17,6 @@ class ProductUpdateController
     {
     }
 
-    /**
-     * @param Product $product
-     * @return ProductResource
-     */
     public function __invoke(Product $product)
     {
         $this->productService->update($product, $this->productRequest->toArray());

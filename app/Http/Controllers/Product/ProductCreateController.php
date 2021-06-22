@@ -9,11 +9,6 @@ use App\Services\Interfaces\ProductServiceInterface;
 class ProductCreateController
 {
 
-    /**
-     * ProductCreateController constructor.
-     * @param ProductServiceInterface $productService
-     * @param ProductCreateRequest $productRequest
-     */
     public function __construct(
         private ProductServiceInterface $productService,
         private ProductCreateRequest $productRequest
@@ -21,11 +16,10 @@ class ProductCreateController
     {
     }
 
-    /**
-     * @return ProductResource
-     */
     public function __invoke()
     {
-        return ProductResource::make($this->productService->save($this->productRequest->toArray()));
+        $product = $this->productService->save($this->productRequest->validated());
+
+        return ProductResource::make($product);
     }
 }

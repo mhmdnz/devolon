@@ -8,20 +8,15 @@ use App\Services\Interfaces\ProductServiceInterface;
 
 class OfferShowController
 {
-    /**
-     * OfferShowController constructor.
-     * @param ProductServiceInterface $productService
-     */
+
     public function __construct(private ProductServiceInterface $productService)
     {
     }
 
-    /**
-     * @param Product $product
-     * @return OfferCollection
-     */
     public function __invoke(Product $product)
     {
-        return OfferCollection::make($this->productService->getOffers($product));
+        $offers = $this->productService->getOffers($product);
+
+        return OfferCollection::make($offers);
     }
 }

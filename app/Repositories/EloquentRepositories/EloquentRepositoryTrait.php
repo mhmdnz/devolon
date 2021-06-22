@@ -2,8 +2,6 @@
 
 namespace App\Repositories\EloquentRepositories;
 
-use App\Http\DTO\BooleanResponseDTO;
-use App\Http\DTO\BooleanResponseDTOInterface;
 use Illuminate\Database\Eloquent\Model;
 
 trait EloquentRepositoryTrait
@@ -13,18 +11,18 @@ trait EloquentRepositoryTrait
         return $this->getModel()::create($productItems);
     }
 
-    public function update(Model $model, array $modelItems): BooleanResponseDTOInterface
+    public function update(Model $model, array $modelItems): bool
     {
-        return (new BooleanResponseDTO())->setResult($model->update($modelItems));
+        return $model->update($modelItems);
     }
 
-    public function delete(Model $model): BooleanResponseDTOInterface
+    public function delete(Model $model): bool
     {
-        return (new BooleanResponseDTO())->setResult($model->delete());
+        return $model->delete();
     }
 
-    public function find($id): Model
+    public function findOrFail($id): Model
     {
-        return $this->getModel()::find($id);
+        return $this->getModel()::findOrFail($id);
     }
 }

@@ -27,6 +27,8 @@ class OfferCreateController
      */
     public function __invoke(Product $product)
     {
-        return OfferResource::make($this->offerService->saveOnProduct($product, $this->offerCreateRequest->validated()));
+        $offer = $this->offerService->saveOnProduct($product, $this->offerCreateRequest->validated());
+
+        return OfferResource::make($offer);
     }
 }

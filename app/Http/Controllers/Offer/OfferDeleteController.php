@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Offer;
 
 use App\Http\Resources\ActionResource;
+use App\Http\Resources\DeleteResultResource;
 use App\Http\Resources\OfferCollection;
 use App\Models\Offer;
 use App\Models\Product;
@@ -11,21 +12,14 @@ use App\Services\Interfaces\OfferServiceInterface;
 class OfferDeleteController
 {
 
-    /**
-     * OfferDeleteController constructor.
-     * @param OfferServiceInterface $offerService
-     */
     public function __construct(private OfferServiceInterface $offerService)
     {
     }
 
-    /**
-     * @param Product $product
-     * @param Offer $offer
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function __invoke(Product $product, Offer $offer)
     {
-        return response()->json($this->offerService->deleteFromProduct($product, $offer));
+        $deleteResult = $this->offerService->delete($offer);
+
+        return DeleteResultResource::make($deleteResult);
     }
 }
