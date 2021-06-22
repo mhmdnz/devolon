@@ -3,6 +3,7 @@
 use App\Http\Controllers\Offer\OfferCreateController;
 use App\Http\Controllers\Offer\OfferDeleteController;
 use App\Http\Controllers\Offer\OfferShowController;
+use App\Http\Controllers\Offer\OfferUpdateController;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/products/{product}/offer', OfferCreateController::class);
+Route::post('/products/{product}/offers', OfferCreateController::class);
 
 Route::get('/products/{product}/offers', OfferShowController::class);
 
-Route::delete('/products/{product}/offers/{offer}', OfferDeleteController::class);
+Route::delete('/products/{product}/offers/{offer}', OfferDeleteController::class)->middleware('checkProductOfferRelation');
+
+Route::put('/products/{product}/offers/{offer}', OfferUpdateController::class)->middleware('checkProductOfferRelation');

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Offer;
 use App\Models\Product;
 use App\Repositories\Interfaces\MainRepositoryInterface;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
@@ -24,5 +25,10 @@ class ProductService implements ProductServiceInterface
     public function getOffers(Product $product): Collection
     {
         return $this->productRepository->getOffers($product);
+    }
+
+    public function isProductRelatedToOffer(Product $product, Offer $offer)
+    {
+        return $offer->product->id == $product->id;
     }
 }
