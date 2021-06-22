@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 trait EloquentRepositoryTrait
 {
+
     public function save(array $productItems): Model
     {
         return $this->getModel()::create($productItems);

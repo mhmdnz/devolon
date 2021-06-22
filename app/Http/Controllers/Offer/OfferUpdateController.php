@@ -11,7 +11,7 @@ use App\Models\Product;
 use App\Services\Interfaces\OfferServiceInterface;
 use Illuminate\Http\Request;
 
-class OfferUpdateController extends Controller
+class OfferUpdateController
 {
     public function __construct(
         private OfferServiceInterface $offerService,

@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductOfferRelationErrorResource extends JsonResource
 {
+
     public function toArray($request)
     {
         return [
