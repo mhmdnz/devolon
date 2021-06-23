@@ -64,7 +64,7 @@ Look at this example :
 
 AA | AA | AA | AA = 120
 
-#### Let`s calculate with first rule ( AAA = 50 ) :
+#### Let`s calculate with second rule ( AAA = 50 ) :
 
 AAA | AAA | A | A = 140
 
@@ -77,7 +77,7 @@ AAA | AA | AA | A = 130
 
 >notice : we still can create more combinations, but the result is clear
 
-###Result :
+### Result :
 
 
 - [ ] AAA | AAA | A | A = 140
