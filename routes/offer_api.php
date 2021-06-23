@@ -18,8 +18,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/products/{product}/offers', OfferCreateController::class);
 
-Route::get('/products/{product}/offers/{offer?}', OfferShowController::class)->middleware('checkProductOfferRelation');
+Route::middleware(['checkProductOfferRelation'])->group(function () {
 
-Route::delete('/products/{product}/offers/{offer}', OfferDeleteController::class)->middleware('checkProductOfferRelation');
+    Route::get('/products/{product}/offers/{offer?}', OfferShowController::class);
 
-Route::put('/products/{product}/offers/{offer}', OfferUpdateController::class)->middleware('checkProductOfferRelation');
+    Route::delete('/products/{product}/offers/{offer}', OfferDeleteController::class);
+
+    Route::put('/products/{product}/offers/{offer}', OfferUpdateController::class);
+
+});
