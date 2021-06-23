@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Offer;
 
-use App\Http\Resources\ActionResource;
 use App\Http\Resources\DeleteResultResource;
-use App\Http\Resources\OfferCollection;
 use App\Models\Offer;
 use App\Models\Product;
 use App\Services\Interfaces\OfferServiceInterface;

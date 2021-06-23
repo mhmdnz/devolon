@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers\Offer;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\OfferUpdateRequest;
 use App\Http\Resources\OfferResource;
-use App\Http\Resources\ProductResource;
 use App\Models\Offer;
 use App\Models\Product;
 use App\Services\Interfaces\OfferServiceInterface;
-use Illuminate\Http\Request;
 
 class OfferUpdateController
 {

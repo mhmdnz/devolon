@@ -24,15 +24,8 @@ class ProductOfferRelationCheckerMiddleware
 
     public function handle(Request $request, Closure $next)
     {
-        $offer = $request->offer;
-        $product = $request->product;
-
-        if ($offer != null && !($offer instanceof Offer)) {
-            $offer = $this->offerService->findOrFail($offer);
-        }
-        if (!($product instanceof Product)) {
-            $product = $this->productService->findOrFail($product);
-        }
+        $offer = $this->getOffer($request);
+        $product = $this->getProduct($request);
 
         if ($offer == null || $this->productService->isProductRelatedToOffer($product, $offer)) {
             return $next($request);
@@ -40,5 +33,25 @@ class ProductOfferRelationCheckerMiddleware
         $productOfferRelationErrorDTO = new ProductOfferRelationErrorDTO(self::PRODUCT_OFFER_RELATION_ERROR_MESSAGE);
 
         return ProductOfferRelationErrorResource::make($productOfferRelationErrorDTO);
+    }
+
+    private function getOffer(Request $request)
+    {
+        $offer = $request->offer;
+        if ($offer != null && !($offer instanceof Offer)) {
+            $offer = $this->offerService->findOrFail($offer);
+        }
+
+        return $offer;
+    }
+
+    private function getProduct(Request $request)
+    {
+        $product = $request->product;
+        if (!($product instanceof Product)) {
+            $product = $this->productService->findOrFail($product);
+        }
+
+        return $product;
     }
 }

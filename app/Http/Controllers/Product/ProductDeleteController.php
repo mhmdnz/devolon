@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Product;
 
-use App\Http\Controllers\Controller;
 use App\Http\Resources\DeleteResultResource;
 use App\Models\Product;
 use App\Services\Interfaces\ProductServiceInterface;
