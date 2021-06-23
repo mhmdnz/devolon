@@ -15,9 +15,9 @@ paths:
     post:
       tags:
         - Product
-      summary: create a new product
-      description: 'To save a single product in system'
-      operationId: Create Product
+      summary: create all products
+      description: 'you could get all products by this API'
+      operationId: get all Product
       consumes:
         - application/json
       produces:
@@ -42,6 +42,29 @@ paths:
           description: create success
           schema:
             $ref: "#/definitions/Product"
+    get:
+      tags:
+        - Product
+      summary: get a specific product
+      description: 'you could get a product by its id'
+      operationId: product
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: login success
+          schema:
+            $ref: '#/definitions/Product'
+      parameters:
+        - in: path
+          name: product
+          schema:
+            type: integer
+            example: 1
+          required: true
+          description: Numeric ID of the product to get
 
   /products/{product}:
     get:
@@ -64,7 +87,7 @@ paths:
           name: product
           schema:
             type: integer
-            example: 74
+            example: 1
           required: true
           description: Numeric ID of the product to get
     put:
@@ -82,7 +105,7 @@ paths:
           name: product
           schema:
             type: integer
-            example: 74
+            example: 1
           required: true
           description: Numeric ID of the product to get
         - in: body
@@ -100,7 +123,7 @@ paths:
                 type: integer
                 example: 300
       responses:
-        '201':
+        '200':
           description: update success
           schema:
             $ref: "#/definitions/Product"
@@ -124,11 +147,11 @@ paths:
           name: product
           schema:
             type: integer
-            example: 74
+            example: 1
           required: true
           description: Numeric ID of the product to get
 
-  /products/{product}/offer:
+  /products/{product}/offers:
     post:
       tags:
         - Offer
@@ -144,7 +167,7 @@ paths:
           name: product
           schema:
             type: integer
-            example: 74
+            example: 1
           required: true
           description: Numeric ID of the product to get
         - in: body
@@ -171,7 +194,6 @@ paths:
           schema:
             $ref: "#/definitions/Offer"
 
-  /products/{product}/offers:
     get:
       tags:
         - Offer
@@ -192,10 +214,40 @@ paths:
           name: product
           schema:
             type: integer
-            example: 74
+            example: 1
           required: true
           description: Numeric ID of the product to get
   /products/{product}/offers/{offer}:
+    get:
+      tags:
+        - Offer
+      summary: get specific offer
+      description: 'you could get a single offer by its ID'
+      operationId: offer get single
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: login success
+          schema:
+            $ref: '#/definitions/Offer'
+      parameters:
+        - in: path
+          name: product
+          schema:
+            type: integer
+            example: 1
+          required: true
+          description: Numeric ID of the product to get
+        - in: path
+          name: offer
+          schema:
+            type: integer
+            example: 1
+          required: true
+          description: Numeric ID of the product to get
     delete:
       tags:
         - Offer
@@ -216,16 +268,72 @@ paths:
           name: product
           schema:
             type: integer
-            example: 74
+            example: 1
           required: true
           description: Numeric ID of the product to get
         - in: path
           name: offer
           schema:
             type: integer
-            example: 26
+            example: 1
           required: true
           description: Numeric ID of the product to get
+    put:
+      tags:
+        - Offer
+      summary: update an exist offer
+      description: 'By using this API you could update an exist offer easily'
+      operationId: Update Offer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: product
+          schema:
+            type: integer
+            example: 1
+          required: true
+          description: Numeric ID of the product to get
+        - in: body
+          name: body
+          schema:
+            type: object
+            required:
+              - name
+              - quantity
+              - price
+            properties:
+              name:
+                type: string
+                example: "offer1"
+              quantity:
+                type: integer
+                example: 2
+              price:
+                type: integer
+                example: 20
+              parameters:
+        - in: path
+          name: product
+          schema:
+            type: integer
+            example: 1
+          required: true
+          description: Numeric ID of the product to get
+        - in: path
+          name: offer
+          schema:
+            type: integer
+            example: 1
+          required: true
+          description: Numeric ID of the product to get
+      responses:
+        '200':
+          description: update success
+          schema:
+            $ref: "#/definitions/Product"
   /checkout:
     post:
       tags:
@@ -248,9 +356,9 @@ paths:
               id:
                 type: integer
             example:
-              - id: 74
-              - id: 74
-              - id: 74
+              - id: 1
+              - id: 1
+              - id: 1
       responses:
         '200':
           description: get checkout successfuly
@@ -311,8 +419,8 @@ definitions:
         type: integer
         example: 20
       discount_calculation:
-          type: object
-          $ref: '#/definitions/BestOffer'
+        type: object
+        $ref: '#/definitions/BestOffer'
   BestOffer:
     type: object
     properties:
