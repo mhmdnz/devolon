@@ -31,21 +31,22 @@ class CheckoutService implements CheckoutServiceInterface
     {
         $productIdCollection = collect($productIds);
         $uniqueProducts = $productIdCollection->groupBy('id');
-        $checkoutDTO = new CheckoutDTO();
         $bestPrice= 0;
         $priceWithoutDiscount = 0;
         $offers = [];
         $uniqueProducts->each(function ($content, $productId) use (&$bestPrice, &$priceWithoutDiscount, &$offers){
-            $product = $this->productRepository->find($productId);
+            $product = $this->productRepository->findOrFail($productId);
             $priceWithoutDiscount += ($product->unit_price * count($content));
             $productBestPrice = $this->getBestPrice($product, count($content));
             $bestPrice += $productBestPrice->sum('price');
             $offers[$product->name] = $productBestPrice;
         });
-        $checkoutDTO->setPrice($bestPrice > 0 ? $bestPrice : $priceWithoutDiscount);
-        $checkoutDTO->setPriceWithoutDiscount($priceWithoutDiscount);
-        $checkoutDTO->setDiscount($bestPrice > 0 ? $priceWithoutDiscount - $bestPrice : 0);
-        $checkoutDTO->setOffers($offers);
+        $checkoutDTO = new CheckoutDTO(
+            $bestPrice > 0 ? $bestPrice : $priceWithoutDiscount,
+            $bestPrice > 0 ? $priceWithoutDiscount - $bestPrice : 0,
+            $offers,
+            $priceWithoutDiscount
+        );
 
         return $checkoutDTO;
     }
@@ -83,12 +84,14 @@ class CheckoutService implements CheckoutServiceInterface
         $offers->each(function ($offer) use ($offersDiscountCollection, $product) {
             $discountPercent = 100 - (($offer->price * 100) / ($product->unit_price * $offer->quantity));
             if ($discountPercent > 0) {
-                $offerDiscountDTO = new OfferDiscountDTO();
-                $offerDiscountDTO->setOfferId($offer->id);
-                $offerDiscountDTO->setOfferName($offer->name);
-                $offerDiscountDTO->setPrice($offer->price);
-                $offerDiscountDTO->setQuantity($offer->quantity);
-                $offerDiscountDTO->setDiscountPercent($discountPercent);
+                $offerDiscountDTO = new OfferDiscountDTO(
+                    $offer->id,
+                    $offer->name,
+                    $offer->quantity,
+                    $discountPercent,
+                    $offer->price
+                );
+
                 $offersDiscountCollection->add($offerDiscountDTO);
             }
         });
@@ -154,11 +157,12 @@ class CheckoutService implements CheckoutServiceInterface
         if (!$currentState) {
             $currentState = collect();
         }
-        $newState = new CheckoutBestOfferDTO();
-        $newState->setOfferName($currentBestOffer->offerName);
-        $newState->setQuantity($numberOfBestQuantity);
-        $newState->setPrice($currentBestOffer->price * $numberOfBestCurrentOfferUsage);
-        $newState->setDiscountPercent($currentBestOffer->discountPercent);
+        $newState = new CheckoutBestOfferDTO(
+            $currentBestOffer->offerName,
+            $numberOfBestQuantity,
+            $currentBestOffer->discountPercent,
+            $currentBestOffer->price * $numberOfBestCurrentOfferUsage
+        );
         $currentState->add($newState);
         if ($retain > 1 && $retain >= $minOfferQuantity) {
             $currentBestOffer = $offerDiscountCollection->where('quantity', '<=', $retain)
@@ -167,11 +171,13 @@ class CheckoutService implements CheckoutServiceInterface
 
             return $this->findStateByGivenBestOffer($product, $offerDiscountCollection, $retain, $currentBestOffer, $currentState);
         } elseif ($retain != 0) {
-            $withoutOfferState = new CheckoutBestOfferDTO();
-            $withoutOfferState->setOfferName(self::WITHOUT_OFFER_NAME);
-            $withoutOfferState->setQuantity($retain);
-            $withoutOfferState->setPrice($product->unit_price * $retain);
-            $withoutOfferState->setDiscountPercent(0);
+            $withoutOfferState = new CheckoutBestOfferDTO(
+                self::WITHOUT_OFFER_NAME,
+                $retain,
+                0,
+                $product->unit_price * $retain
+            );
+
             $currentState->add($withoutOfferState);
         }
 
@@ -204,11 +210,12 @@ class CheckoutService implements CheckoutServiceInterface
      */
     private function getWithoutOfferStateCollection($repeatCount, Product $product): Collection
     {
-        $withoutOfferState = new CheckoutBestOfferDTO();
-        $withoutOfferState->setOfferName(self::WITHOUT_OFFER_NAME);
-        $withoutOfferState->setQuantity($repeatCount);
-        $withoutOfferState->setPrice($repeatCount * $product->unit_price);
-        $withoutOfferState->setDiscountPercent(0);
+        $withoutOfferState = new CheckoutBestOfferDTO(
+            self::WITHOUT_OFFER_NAME,
+            $repeatCount,
+            0,
+            $repeatCount * $product->unit_price
+        );
 
         return collect($withoutOfferState);
     }

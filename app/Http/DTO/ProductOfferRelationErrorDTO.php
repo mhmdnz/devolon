@@ -6,15 +6,7 @@ namespace App\Http\DTO;
 
 class ProductOfferRelationErrorDTO implements ProductOfferRelationErrorDTOInterface
 {
-    private string $error;
-
-    public function getError(): string
+    public function __construct(public string $error)
     {
-        return $this->error;
-    }
-
-    public function setError(string $error): void
-    {
-        $this->error = $error;
     }
 }

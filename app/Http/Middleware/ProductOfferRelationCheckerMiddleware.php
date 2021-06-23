@@ -36,8 +36,7 @@ class ProductOfferRelationCheckerMiddleware
         if ($this->productService->isProductRelatedToOffer($product, $offer)) {
             return $next($request);
         }
-        $productOfferRelationErrorDTO = new ProductOfferRelationErrorDTO();
-        $productOfferRelationErrorDTO->setError(self::PRODUCT_OFFER_RELATION_ERROR_MESSAGE);
+        $productOfferRelationErrorDTO = new ProductOfferRelationErrorDTO(self::PRODUCT_OFFER_RELATION_ERROR_MESSAGE);
 
         return ProductOfferRelationErrorResource::make($productOfferRelationErrorDTO);
     }

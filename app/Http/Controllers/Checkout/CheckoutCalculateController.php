@@ -4,16 +4,13 @@ namespace App\Http\Controllers\Checkout;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CheckoutRequest;
+use App\Http\Resources\CheckoutResource;
 use App\Services\Interfaces\CheckoutServiceInterface;
 use Illuminate\Http\Request;
 
 class CheckoutCalculateController
 {
-    /**
-     * CheckoutCalculateController constructor.
-     * @param CheckoutServiceInterface $checkoutService
-     * @param CheckoutRequest $checkoutRequest
-     */
+
     public function __construct(
         private CheckoutServiceInterface $checkoutService,
         private CheckoutRequest $checkoutRequest
@@ -21,13 +18,10 @@ class CheckoutCalculateController
     {
     }
 
-    /**
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function __invoke()
     {
-        return response()->json(
-            $this->checkoutService->calculateCheckout($this->checkoutRequest->validated())
-        );
+        $calculateCheckout = $this->checkoutService->calculateCheckout($this->checkoutRequest->validated());
+
+        return CheckoutResource::make($calculateCheckout);
     }
 }

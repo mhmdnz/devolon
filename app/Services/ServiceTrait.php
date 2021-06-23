@@ -17,16 +17,14 @@ trait ServiceTrait
 
     public function update(Model $model, array $modelItems): UpdateResultDTOInterface
     {
-        $updateResultDTO = new UpdateResultDTO();
         $updateResult = $this->getModelRepository()->update($model, $modelItems);
 
-        return $updateResultDTO->setResult($updateResult);
+        return new UpdateResultDTO($updateResult);
     }
 
     public function delete(Model $model): DeleteResultDTOInterface
     {
-        $deleteResultDTO = new DeleteResultDTO();
-        $deleteResultDTO->setResult($this->getModelRepository()->delete($model));
+        $deleteResultDTO = new DeleteResultDTO($this->getModelRepository()->delete($model));
 
         return $deleteResultDTO;
     }

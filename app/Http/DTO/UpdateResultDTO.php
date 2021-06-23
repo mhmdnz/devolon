@@ -6,17 +6,7 @@ namespace App\Http\DTO;
 
 class UpdateResultDTO implements UpdateResultDTOInterface
 {
-    private $result;
-
-    public function setResult(bool $result): UpdateResultDTOInterface
+    public function __construct(public string $result)
     {
-        $this->result = $result;
-
-        return $this;
-    }
-
-    public function getResult(): bool
-    {
-        return $this->result;
     }
 }

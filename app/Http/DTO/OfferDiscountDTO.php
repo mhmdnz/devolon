@@ -4,47 +4,21 @@
 namespace App\Http\DTO;
 
 
-class OfferDiscountDTO implements OfferDiscountDTOInterface,\JsonSerializable
+class OfferDiscountDTO implements OfferDiscountDTOInterface
 {
-    public $id;
-    public $offerName;
-    public $quantity;
-    public $discountPercent;
-    public $price;
+
+    public function __construct(
+        public int $id,
+        public string $offerName,
+        public int $quantity,
+        public int $discountPercent,
+        public int $price
+    )
+    {
+    }
 
     public function setOfferId($id): void
     {
         $this->id = $id;
-    }
-
-    public function setOfferName($name): void
-    {
-        $this->offerName = $name;
-    }
-
-    public function setQuantity($quantity): void
-    {
-        $this->quantity = $quantity;
-    }
-
-    public function setDiscountPercent($discountPercent): void
-    {
-        $this->discountPercent = $discountPercent;
-    }
-
-    public function setPrice($price): void
-    {
-        $this->price = $price;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->id,
-            'offerName' => $this->offerName,
-            'price' => $this->price,
-            'discountPercent' => $this->discountPercent,
-            'quantity' => $this->quantity
-        ];
     }
 }

@@ -4,40 +4,14 @@
 namespace App\Http\DTO;
 
 
-class CheckoutBestOfferDTO implements CheckoutBestOfferDTOInterface,\JsonSerializable
+class CheckoutBestOfferDTO implements CheckoutBestOfferDTOInterface
 {
-    public $offerName;
-    public $quantity;
-    public $discountPercent;
-    public $price;
-
-    public function setOfferName($name): void
+    public function __construct(
+        public string $offerName,
+        public int $quantity,
+        public int $discountPercent,
+        public int $price
+    )
     {
-        $this->offerName = $name;
-    }
-
-    public function setQuantity($quantity): void
-    {
-        $this->quantity = $quantity;
-    }
-
-    public function setDiscountPercent($discountPercent): void
-    {
-        $this->discountPercent = $discountPercent;
-    }
-
-    public function setPrice($price): void
-    {
-        $this->price = $price;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'offerName' => $this->offerName,
-            'price' => $this->price,
-            'discountPercent' => $this->discountPercent,
-            'quantity' => $this->quantity
-        ];
     }
 }

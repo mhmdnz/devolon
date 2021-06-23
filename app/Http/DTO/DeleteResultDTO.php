@@ -6,17 +6,7 @@ namespace App\Http\DTO;
 
 class DeleteResultDTO implements DeleteResultDTOInterface
 {
-    private bool $result = false;
-
-    public function getResult(): bool
+    public function __construct(public string $result)
     {
-        return $this->result;
-    }
-
-    public function setResult(bool $result): DeleteResultDTOInterface
-    {
-        $this->result = $result;
-
-        return $this;
     }
 }
