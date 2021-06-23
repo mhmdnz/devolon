@@ -16,9 +16,4 @@ class OfferDiscountDTO implements OfferDiscountDTOInterface
     )
     {
     }
-
-    public function setOfferId($id): void
-    {
-        $this->id = $id;
-    }
 }

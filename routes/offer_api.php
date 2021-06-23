@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/products/{product}/offers', OfferCreateController::class);
 
-Route::get('/products/{product}/offers', OfferShowController::class);
+Route::get('/products/{product}/offers/{offer?}', OfferShowController::class)->middleware('checkProductOfferRelation');
 
 Route::delete('/products/{product}/offers/{offer}', OfferDeleteController::class)->middleware('checkProductOfferRelation');
 

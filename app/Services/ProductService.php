@@ -22,9 +22,14 @@ class ProductService implements ProductServiceInterface
         return $this->productRepository;
     }
 
-    public function getOffers(Product $product): Collection
+    public function getOffers(Product $product, Offer $offer = null): Collection
     {
-        return $this->productRepository->getOffers($product);
+        $result = collect()->add($offer);
+        if (!$offer) {
+            $result = $this->productRepository->getOffers($product);
+        }
+
+        return $result;
     }
 
     public function isProductRelatedToOffer(Product $product, Offer $offer)

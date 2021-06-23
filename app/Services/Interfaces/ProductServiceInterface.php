@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
 
 interface ProductServiceInterface extends MainServiceInterface
 {
-    public function getOffers(Product $product): Collection;
+    public function getOffers(Product $product, Offer $offer): Collection;
 
     public function isProductRelatedToOffer(Product $product, Offer $offer);
 }

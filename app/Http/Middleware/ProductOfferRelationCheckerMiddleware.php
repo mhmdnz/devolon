@@ -26,14 +26,15 @@ class ProductOfferRelationCheckerMiddleware
     {
         $offer = $request->offer;
         $product = $request->product;
-        if (!($offer instanceof Offer)) {
+
+        if ($offer != null && !($offer instanceof Offer)) {
             $offer = $this->offerService->findOrFail($offer);
         }
         if (!($product instanceof Product)) {
             $product = $this->productService->findOrFail($product);
         }
 
-        if ($this->productService->isProductRelatedToOffer($product, $offer)) {
+        if ($offer == null || $this->productService->isProductRelatedToOffer($product, $offer)) {
             return $next($request);
         }
         $productOfferRelationErrorDTO = new ProductOfferRelationErrorDTO(self::PRODUCT_OFFER_RELATION_ERROR_MESSAGE);
