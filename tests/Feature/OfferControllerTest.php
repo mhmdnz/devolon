@@ -14,7 +14,7 @@ class OfferControllerTest extends TestCase
     public function test_create_success()
     {
         $product = Product::factory()->create()->first();
-        $response = $this->postJson("/api/products/$product->id/offer", [
+        $response = $this->postJson("/api/products/$product->id/offers", [
             'name' => 'firstTest',
             'quantity' => 10,
             'price' => 40
@@ -27,7 +27,7 @@ class OfferControllerTest extends TestCase
     public function test_create_validation_error()
     {
         $product = Product::factory()->create()->first();
-        $response = $this->postJson("/api/products/$product->id/offer", [
+        $response = $this->postJson("/api/products/$product->id/offers", [
             'name' => 'firstTest',
             'quantity' => 10,
 //            'price' => 40(missing parameters)

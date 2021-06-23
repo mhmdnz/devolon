@@ -12,7 +12,7 @@ class ProductControllerTest extends TestCase
 
     public function test_create_success()
     {
-        $response = $this->postJson('/api/product', [
+        $response = $this->postJson('/api/products', [
             'name' => 'firstTest',
             'unit_price' => 10,
         ]);
@@ -23,7 +23,7 @@ class ProductControllerTest extends TestCase
 
     public function test_create_validation_error()
     {
-        $response = $this->postJson('/api/product', [
+        $response = $this->postJson('/api/products', [
             'name' => 'firstTest',
 //            'unit_price' => 10, (missing parameters)
         ]);
@@ -52,20 +52,10 @@ class ProductControllerTest extends TestCase
     {
         $product = (Product::factory(1)->create())->first();
         $this->assertDatabaseHas('products', ['name' => $product->name]);
-        $this->putJson("/api/products/$product->id", [
+        $res = $this->putJson("/api/products/$product->id", [
            'name' => $product->name . 'changed_name'
         ]);
-        $this->assertDatabaseHas('products', ['name' => $product->name . 'changed_name']);
-    }
 
-    public function test_upsert_success()
-    {
-        $this->postJson("/api/products", [
-            ['name' => 'test1', 'unit_price' => 10],
-            ['name' => 'test2', 'unit_price' => 10],
-            ['name' => 'test3', 'unit_price' => 10]
-        ]);
-        $this->assertDatabaseCount('products', 3);
-        $this->assertDatabaseHas('products', ['name' => 'test1']);
+        $this->assertDatabaseHas('products', ['name' => $product->name . 'changed_name']);
     }
 }

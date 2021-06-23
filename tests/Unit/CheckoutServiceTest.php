@@ -32,11 +32,12 @@ class CheckoutServiceTest extends TestCase
 
     public function test_calculate_state_discount()
     {
-        $checkoutBestOfferDTO = new CheckoutBestOfferDTO();
-        $checkoutBestOfferDTO->setOfferName('test');
-        $checkoutBestOfferDTO->setDiscountPercent(20);
-        $checkoutBestOfferDTO->setQuantity(3);
-        $checkoutBestOfferDTO->setPrice(20);
+        $checkoutBestOfferDTO = new CheckoutBestOfferDTO(
+            'test',
+            3,
+            20,
+            20
+        );
 
         $calculateStateDiscountMethod = $this->getMethod('calculateStateDiscount', $this->checkoutService);
         $result = $calculateStateDiscountMethod->invokeArgs($this->checkoutService, [collect([$checkoutBestOfferDTO])]);
@@ -105,7 +106,7 @@ class CheckoutServiceTest extends TestCase
         ])->create();
 
         $productRepositoryMock = \Mockery::mock(ProductRepositoryInterface::class)->makePartial();
-        $productRepositoryMock->shouldReceive('find')
+        $productRepositoryMock->shouldReceive('findOrFail')
             ->with($product1->id)
             ->andReturn($product1);
 
@@ -142,17 +143,15 @@ class CheckoutServiceTest extends TestCase
         return $method;
     }
 
-    /**
-     * @return OfferDiscountDTO
-     */
     private function getOfferDiscount(): OfferDiscountDTO
     {
-        $offerDiscount = new OfferDiscountDTO();
-        $offerDiscount->setPrice(50);
-        $offerDiscount->setQuantity(3);
-        $offerDiscount->setDiscountPercent(16.66);
-        $offerDiscount->setOfferName('firstOffer');
-        $offerDiscount->setOfferId(1);
+        $offerDiscount = new OfferDiscountDTO(
+            1,
+            'firstOffer',
+            3,
+            16.66,
+            50
+        );
 
         return $offerDiscount;
     }
