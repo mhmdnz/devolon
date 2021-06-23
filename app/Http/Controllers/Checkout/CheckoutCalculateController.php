@@ -18,7 +18,7 @@ class CheckoutCalculateController
     {
     }
 
-    public function __invoke()
+    public function __invoke(): CheckoutResource
     {
         $calculateCheckout = $this->checkoutService->calculateCheckout($this->checkoutRequest->validated());
 

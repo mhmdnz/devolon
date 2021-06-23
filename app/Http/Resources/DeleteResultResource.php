@@ -11,7 +11,7 @@ class DeleteResultResource extends JsonResource
         1 => 'Success'
     ];
 
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'delete_result' => self::RESULT[$this->result]

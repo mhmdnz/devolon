@@ -13,7 +13,7 @@ class ProductShowController
     {
     }
 
-    public function __invoke(Product $product = null)
+    public function __invoke(Product $product = null) : ProductCollection
     {
         $product = $this->productService->getProducts($product);
 

@@ -16,7 +16,7 @@ class ProductCreateController
     {
     }
 
-    public function __invoke()
+    public function __invoke(): ProductResource
     {
         $product = $this->productService->save($this->productRequest->validated());
 

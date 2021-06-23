@@ -14,7 +14,7 @@ class OfferShowController
     {
     }
 
-    public function __invoke(Product $product, Offer $offer = null)
+    public function __invoke(Product $product, Offer $offer = null): OfferCollection
     {
         $offers = $this->productService->getOffers($product, $offer);
 

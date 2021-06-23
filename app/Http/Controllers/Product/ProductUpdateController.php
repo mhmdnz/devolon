@@ -17,7 +17,7 @@ class ProductUpdateController
     {
     }
 
-    public function __invoke(Product $product)
+    public function __invoke(Product $product): ProductResource
     {
         $this->productService->update($product, $this->productRequest->toArray());
 

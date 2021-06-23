@@ -33,7 +33,7 @@ class ProductService implements ProductServiceInterface
         return $result;
     }
 
-    public function isProductRelatedToOffer(Product $product, Offer $offer)
+    public function isProductRelatedToOffer(Product $product, Offer $offer): bool
     {
         return $offer->product->id == $product->id;
     }

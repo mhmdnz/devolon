@@ -11,7 +11,7 @@ class UpdateResultResource extends JsonResource
         1 => 'Success'
     ];
 
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'update_result' => self::RESULT[$this->result]

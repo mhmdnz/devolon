@@ -20,7 +20,7 @@ class OfferUpdateController
     {
     }
 
-    public function __invoke(Product $product, Offer $offer)
+    public function __invoke(Product $product, Offer $offer): OfferResource
     {
         $this->offerService->update($offer, $this->offerUpdateRequest->toArray());
 

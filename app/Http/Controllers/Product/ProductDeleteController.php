@@ -14,7 +14,7 @@ class ProductDeleteController
     {
     }
 
-    public function __invoke(Product $product)
+    public function __invoke(Product $product): DeleteResultResource
     {
         $deleteResult = $this->productService->delete($product);
 

@@ -16,7 +16,7 @@ class OfferDeleteController
     {
     }
 
-    public function __invoke(Product $product, Offer $offer)
+    public function __invoke(Product $product, Offer $offer): DeleteResultResource
     {
         $deleteResult = $this->offerService->delete($offer);
 
