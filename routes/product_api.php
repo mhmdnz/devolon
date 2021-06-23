@@ -24,4 +24,4 @@ Route::delete('/products/{product}', ProductDeleteController::class);
 
 Route::put('/products/{product}', ProductUpdateController::class);
 
-Route::get('/products/{product}', ProductShowController::class);
+Route::get('/products/{product?}', ProductShowController::class);

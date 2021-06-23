@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Repositories\Interfaces\MainRepositoryInterface;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Services\Interfaces\ProductServiceInterface;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class ProductService implements ProductServiceInterface
@@ -35,5 +36,15 @@ class ProductService implements ProductServiceInterface
     public function isProductRelatedToOffer(Product $product, Offer $offer)
     {
         return $offer->product->id == $product->id;
+    }
+
+    public function getProducts(Product $product = null): Collection
+    {
+        $result = collect()->add($product);
+        if (!$product) {
+            $result = $this->productRepository->all();
+        }
+
+        return $result;
     }
 }

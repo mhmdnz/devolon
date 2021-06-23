@@ -6,6 +6,7 @@ namespace App\Repositories\Interfaces;
 
 use App\Http\DTO\BooleanResponseDTOInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 interface MainRepositoryInterface
 {
@@ -18,4 +19,6 @@ interface MainRepositoryInterface
     public function getModel(): Model;
 
     public function findOrFail($id): Model;
+
+    public function all(): Collection;
 }

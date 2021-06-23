@@ -2,14 +2,21 @@
 
 namespace App\Http\Controllers\Product;
 
+use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use App\Services\Interfaces\ProductServiceInterface;
 
 class ProductShowController
 {
-
-    public function __invoke(Product $product)
+    public function __construct(private ProductServiceInterface $productService)
     {
-        return ProductResource::make($product);
+    }
+
+    public function __invoke(Product $product = null)
+    {
+        $product = $this->productService->getProducts($product);
+
+        return ProductCollection::make($product);
     }
 }

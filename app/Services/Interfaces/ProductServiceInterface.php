@@ -15,4 +15,6 @@ interface ProductServiceInterface extends MainServiceInterface
     public function getOffers(Product $product, Offer $offer): Collection;
 
     public function isProductRelatedToOffer(Product $product, Offer $offer);
+
+    public function getProducts(Product $product = null): Collection;
 }

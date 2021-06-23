@@ -3,6 +3,7 @@
 namespace App\Repositories\EloquentRepositories;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 trait EloquentRepositoryTrait
 {
@@ -25,5 +26,10 @@ trait EloquentRepositoryTrait
     public function findOrFail($id): Model
     {
         return $this->getModel()::findOrFail($id);
+    }
+
+    public function all(): Collection
+    {
+        return $this->getModel()::all();
     }
 }
