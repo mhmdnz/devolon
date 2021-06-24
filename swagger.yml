@@ -49,7 +49,6 @@ paths:
       description: 'you could get all products by this API'
       operationId: product
       consumes:
-        -
         - application/json
       produces:
         - application/json
