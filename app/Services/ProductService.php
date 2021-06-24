@@ -7,7 +7,6 @@ use App\Models\Product;
 use App\Repositories\Interfaces\MainRepositoryInterface;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Services\Interfaces\ProductServiceInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class ProductService implements ProductServiceInterface
