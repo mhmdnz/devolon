@@ -45,10 +45,11 @@ paths:
     get:
       tags:
         - Product
-      summary: get a specific product
-      description: 'you could get a product by its id'
+      summary: get all products
+      description: 'you could get all products by this API'
       operationId: product
       consumes:
+        -
         - application/json
       produces:
         - application/json
