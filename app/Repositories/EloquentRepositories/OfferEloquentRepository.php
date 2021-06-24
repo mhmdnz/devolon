@@ -23,7 +23,7 @@ class OfferEloquentRepository implements OfferRepositoryInterface
 
     public function saveOnProduct(Product $product, array $offerItems): Offer
     {
-        $offer = Offer::make($offerItems);
+        $offer = $this->offer::make($offerItems);
         $product->offers()->save($offer);
 
         return $offer;
