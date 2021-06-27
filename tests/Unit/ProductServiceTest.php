@@ -2,6 +2,8 @@
 
 namespace Tests\Unit;
 
+use App\Http\DTO\DeleteResultDTO;
+use App\Http\DTO\UpdateResultDTO;
 use App\Models\Offer;
 use App\Models\Product;
 use App\Repositories\Interfaces\ProductRepositoryInterface;
@@ -84,5 +86,61 @@ class ProductServiceTest extends TestCase
 
         $result = $productService->getProducts();
         $this->assertEquals($expectedResult, $result);
+    }
+
+    public function test_save(): void
+    {
+        $product = Product::factory()->make();
+        $fakeArgs = ['test'];
+        $productRepository = \Mockery::mock(ProductRepositoryInterface::class)->makePartial();
+        $productRepository->shouldReceive('save')
+            ->once()
+            ->withArgs([$fakeArgs])
+            ->andReturn($product);
+        $productService = new ProductService($productRepository);
+        $result = $productService->save($fakeArgs);
+        $this->assertEquals($product, $result);
+    }
+
+    public function test_update(): void
+    {
+        $product = Product::factory()->make();
+        $expectedResult = new UpdateResultDTO(true);
+        $fakeArgs = ['test'];
+        $productRepository = \Mockery::mock(ProductRepositoryInterface::class)->makePartial();
+        $productRepository->shouldReceive('update')
+            ->once()
+            ->withArgs([$product, $fakeArgs])
+            ->andReturnTrue();
+        $productService = new ProductService($productRepository);
+        $result = $productService->update($product, $fakeArgs);
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    public function test_delete(): void
+    {
+        $product = Product::factory()->make();
+        $expectedResult = new DeleteResultDTO(true);
+        $productRepository = \Mockery::mock(ProductRepositoryInterface::class)->makePartial();
+        $productRepository->shouldReceive('delete')
+            ->once()
+            ->withArgs([$product])
+            ->andReturnTrue();
+        $productService = new ProductService($productRepository);
+        $result = $productService->delete($product);
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    public function test_find_or_fail(): void
+    {
+        $product = Product::factory()->make();
+        $productRepository = \Mockery::mock(ProductRepositoryInterface::class)->makePartial();
+        $productRepository->shouldReceive('findOrFail')
+            ->once()
+            ->withArgs([$product->id])
+            ->andReturn($product);
+        $productService = new ProductService($productRepository);
+        $result = $productService->findOrFail($product->id);
+        $this->assertEquals($product, $result);
     }
 }
